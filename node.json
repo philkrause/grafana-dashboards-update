@@ -1,0 +1,465 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "Streamline and optimize important metrics with Node Exporter v0.16+. Contains: CPU memory Disk IO network temperature and other monitoring indicators. https://github.com/starsliao/Prometheus translated by Google :-) ",
+    "editable": true,
+    "gnetId": 10645,
+    "graphTooltip": 0,
+    "id": 5,
+    "iteration": 1578337253333,
+    "links": [
+      {
+        "icon": "external link",
+        "tags": [],
+        "targetBlank": true,
+        "title": "Update node_exporter",
+        "tooltip": "",
+        "type": "link",
+        "url": "https://github.com/prometheus/node_exporter/releases"
+      },
+      {
+        "icon": "external link",
+        "tags": [],
+        "targetBlank": true,
+        "title": "Update dashboard",
+        "tooltip": "",
+        "type": "link",
+        "url": "https://grafana.com/dashboards/8919"
+      }
+    ],
+    "panels": [
+      {
+        "cacheTimeout": null,
+        "datasource": "Prometheus",
+        "gridPos": {
+          "h": 5,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 214,
+        "links": [],
+        "options": {
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 80
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ],
+              "unit": "percent"
+            },
+            "override": {},
+            "values": false
+          },
+          "orientation": "horizontal",
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "6.4.2",
+        "targets": [
+          {
+            "expr": "((node_memory_MemTotal_bytes{instance=~\"$node\"}) - (node_memory_MemFree_bytes{instance=~\"$node\"} + node_memory_Buffers_bytes{instance=~\"$node\"}  ) ) / (node_memory_MemTotal_bytes{instance=~\"$node\"}) * 100",
+            "format": "time_series",
+            "instant": false,
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Memory Usage %",
+        "type": "gauge"
+      },
+      {
+        "cacheTimeout": null,
+        "datasource": "Prometheus",
+        "gridPos": {
+          "h": 5,
+          "w": 24,
+          "x": 0,
+          "y": 5
+        },
+        "id": 211,
+        "links": [],
+        "options": {
+          "fieldOptions": {
+            "calcs": [
+              "diff"
+            ],
+            "defaults": {
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ],
+              "unit": "percent"
+            },
+            "override": {},
+            "values": false
+          },
+          "orientation": "horizontal",
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "6.4.2",
+        "targets": [
+          {
+            "expr": "((node_memory_MemTotal_bytes{instance=~\"$node\"}) - (node_memory_MemFree_bytes{instance=~\"$node\"} + node_memory_Buffers_bytes{instance=~\"$node\"}  ) ) / (node_memory_MemTotal_bytes{instance=~\"$node\"}) * 100",
+            "format": "time_series",
+            "instant": false,
+            "intervalFactor": 1,
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Avg Memory Rate of Change %",
+        "type": "gauge"
+      },
+      {
+        "cacheTimeout": null,
+        "datasource": "Prometheus",
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 10
+        },
+        "id": 156,
+        "interval": "",
+        "links": [],
+        "maxPerRow": null,
+        "options": {
+          "displayMode": "lcd",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "0",
+                  "id": 1,
+                  "operator": "",
+                  "text": "",
+                  "to": "100",
+                  "type": 1,
+                  "value": "100"
+                }
+              ],
+              "max": 10,
+              "min": 0,
+              "thresholds": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 1
+                },
+                {
+                  "color": "green",
+                  "value": 4
+                }
+              ],
+              "unit": "decgbytes"
+            },
+            "override": {},
+            "values": false
+          },
+          "orientation": "vertical"
+        },
+        "pluginVersion": "6.4.2",
+        "repeat": null,
+        "repeatDirection": null,
+        "targets": [
+          {
+            "expr": "node_memory_MemAvailable_bytes{instance=~\"$node\"}  / (1024*1024*1024)",
+            "format": "time_series",
+            "hide": false,
+            "instant": false,
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{instance}}",
+            "refId": "A",
+            "step": 4
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Available Memory",
+        "type": "bargauge"
+      }
+    ],
+    "refresh": "1m",
+    "schemaVersion": 20,
+    "style": "dark",
+    "tags": [
+      "Prometheus",
+      "node_exporter",
+      "StarsL.cn"
+    ],
+    "templating": {
+      "list": [
+        {
+          "auto": true,
+          "auto_count": 10,
+          "auto_min": "10s",
+          "current": {
+            "text": "5s",
+            "value": "5s"
+          },
+          "hide": 0,
+          "label": "interval",
+          "name": "interval",
+          "options": [
+            {
+              "selected": false,
+              "text": "auto",
+              "value": "$__auto_interval_interval"
+            },
+            {
+              "selected": true,
+              "text": "5s",
+              "value": "5s"
+            },
+            {
+              "selected": false,
+              "text": "10s",
+              "value": "10s"
+            },
+            {
+              "selected": false,
+              "text": "30s",
+              "value": "30s"
+            },
+            {
+              "selected": false,
+              "text": "1m",
+              "value": "1m"
+            },
+            {
+              "selected": false,
+              "text": "10m",
+              "value": "10m"
+            },
+            {
+              "selected": false,
+              "text": "30m",
+              "value": "30m"
+            },
+            {
+              "selected": false,
+              "text": "1h",
+              "value": "1h"
+            },
+            {
+              "selected": false,
+              "text": "6h",
+              "value": "6h"
+            },
+            {
+              "selected": false,
+              "text": "12h",
+              "value": "12h"
+            },
+            {
+              "selected": false,
+              "text": "1d",
+              "value": "1d"
+            }
+          ],
+          "query": "5s,10s,30s,1m,10m,30m,1h,6h,12h,1d",
+          "refresh": 2,
+          "skipUrlSync": false,
+          "type": "interval"
+        },
+        {
+          "allFormat": "glob",
+          "allValue": null,
+          "current": {
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "Prometheus",
+          "definition": "",
+          "hide": 0,
+          "includeAll": true,
+          "label": "surroundings",
+          "multi": true,
+          "multiFormat": "regex values",
+          "name": "env",
+          "options": [],
+          "query": "label_values(node_exporter_build_info,env)",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allFormat": "glob",
+          "allValue": "",
+          "current": {
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "Prometheus",
+          "definition": "label_values(node_exporter_build_info{env=~'$env'},name)",
+          "hide": 0,
+          "includeAll": true,
+          "label": "CPU name",
+          "multi": true,
+          "multiFormat": "regex values",
+          "name": "name",
+          "options": [],
+          "query": "label_values(node_exporter_build_info{env=~'$env'},name)",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "/.*/",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allFormat": "glob",
+          "allValue": null,
+          "current": {
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "Prometheus",
+          "definition": "label_values(node_exporter_build_info{name=~'$name'},instance)",
+          "hide": 0,
+          "includeAll": true,
+          "label": "IP",
+          "multi": true,
+          "multiFormat": "regex values",
+          "name": "node",
+          "options": [],
+          "query": "label_values(node_exporter_build_info{name=~'$name'},instance)",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "text": "/",
+            "value": "/"
+          },
+          "datasource": "Prometheus",
+          "definition": "",
+          "hide": 2,
+          "includeAll": false,
+          "label": "",
+          "multi": false,
+          "name": "maxmount",
+          "options": [],
+          "query": "query_result(topk(1,sort_desc (max(node_filesystem_size_bytes{instance=~'$node',fstype=~\"ext4|xfs\"}) by (mountpoint))))",
+          "refresh": 2,
+          "regex": "/.*\\\"(.*)\\\".*/",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "datasource": "prometheus_111",
+          "filters": [],
+          "hide": 0,
+          "label": "",
+          "name": "Filters",
+          "skipUrlSync": false,
+          "type": "adhoc"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-7d",
+      "to": "now"
+    },
+    "timepicker": {
+      "now": true,
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
+    },
+    "timezone": "browser",
+    "title": "Node Overview",
+    "uid": "9CWBz0bik",
+    "version": 2
+  }
